@@ -10,9 +10,11 @@ import (
 )
 
 func main() {
-    http.HandleFunc("/", hello)
+
+	router := mux.NewRouter().StrictSlash(true)
+    router.HandleFunc("/", hello)
     fmt.Println("listening...")
-    err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+    err := http.ListenAndServe(":"+os.Getenv("PORT"), router)
     if err != nil {
       panic(err)
     }
