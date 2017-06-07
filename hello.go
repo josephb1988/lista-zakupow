@@ -16,5 +16,5 @@ func main() {
 }
 
 func hello(res http.ResponseWriter, req *http.Request) {
-    fmt.Fprintf(res, "Hello, %q", html.EscapeString(req.URL.Path)
+    fmt.Fprintf(res, "Hello, %q", html.EscapeString(req.URL.Path) )
 }
