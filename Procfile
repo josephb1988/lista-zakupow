@@ -1,1 +1,1 @@
-web: hello
+web: lista-zakupow
