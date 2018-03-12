@@ -4,6 +4,8 @@ import (
     "encoding/json"
     "log"
     "net/http"
+    "os"
+    
     "github.com/gorilla/mux"
 )
  
@@ -33,9 +35,9 @@ func GetItemsEndpoint(w http.ResponseWriter, req *http.Request) {
 func AddItemEndpoint(w http.ResponseWriter, req *http.Request) {
     params := mux.Vars(req)
     var item Item
-    _ = json.NewDecoder(req.Body).Decode(&Item)
+    _ = json.NewDecoder(req.Body).Decode(&item)
     item.ID = params["id"]
-    ShoppingList = append(ShoppingList, Item)
+    ShoppingList = append(ShoppingList, item)
     json.NewEncoder(w).Encode(ShoppingList)
 }
 
