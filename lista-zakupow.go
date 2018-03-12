@@ -7,6 +7,7 @@ import (
     "os"
     
     "github.com/gorilla/mux"
+    "strconv"
 )
  
 type Item struct {
@@ -33,10 +34,9 @@ func GetItemsEndpoint(w http.ResponseWriter, req *http.Request) {
 }
 
 func AddItemEndpoint(w http.ResponseWriter, req *http.Request) {
-    params := mux.Vars(req)
     var item Item
     _ = json.NewDecoder(req.Body).Decode(&item)
-    item.ID = params["id"]
+    item.ID = strconv.Itoa( len(ShoppingList) + 1 )
     ShoppingList = append(ShoppingList, item)
     json.NewEncoder(w).Encode(ShoppingList)
 }
@@ -59,7 +59,7 @@ func main() {
     ShoppingList = append(ShoppingList, Item{ID: "2", Name: "Maslo"})
     router.HandleFunc("/items", GetItemsEndpoint).Methods("GET")
     router.HandleFunc("/items/{id}", GetItemEndpoint).Methods("GET")
-    router.HandleFunc("/items/{id}", AddItemEndpoint).Methods("POST")
+    router.HandleFunc("/items", AddItemEndpoint).Methods("POST")
     router.HandleFunc("/items/{id}", RemoveItemEndpoint).Methods("DELETE")
     log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
 }
